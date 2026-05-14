@@ -76,7 +76,7 @@ const GoogleSVG: React.FC<{ className?: string }> = ({ className }) => (
   </svg>
 );
 
-// icon wrapper component
+// Icon wrapper component
 const Icon = ({ name, className, spin = false }: IconProps) => {
   if (name === 'google') return <GoogleSVG className={className} />;
 

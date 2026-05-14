@@ -1,110 +1,12 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { registerUser, signInWithGoogle } from '@/services/firebase/auth';
-import Icon, { IconName } from '@/components/common/Icon';
+import FormInput from '@/components/common/FormInput';
+import Icon from '@/components/common/Icon';
+import { getSignupPageErrorMsg, getPasswordStrength } from './helpers';
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
-const getFirebaseErrorMessage = (code: string): string => {
-  const map: Record<string, string> = {
-    'auth/email-already-in-use': 'An account with this email already exists.',
-    'auth/invalid-email': 'Please enter a valid email address.',
-    'auth/weak-password': 'Password must be at least 6 characters.',
-    'auth/network-request-failed': 'Network error. Check your connection.',
-  };
-  return map[code] || 'Failed to create account. Please try again.';
-};
-
-// ── Password Strength ─────────────────────────────────────────────────────────
-const getPasswordStrength = (
-  pw: string,
-): { score: number; label: string; color: string } => {
-  // validate password
-  if (!pw) return { score: 0, label: '', color: '' };
-
-  // assign score for password
-  let score = 0;
-  if (pw.length >= 8) score++;
-  if (/[A-Z]/.test(pw)) score++;
-  if (/[0-9]/.test(pw)) score++;
-  if (/[^A-Za-z0-9]/.test(pw)) score++;
-
-  const levels = [
-    { score: 1, label: 'Weak', color: 'bg-red-500' },
-    { score: 2, label: 'Fair', color: 'bg-amber-400' },
-    { score: 3, label: 'Strong', color: 'bg-emerald-500' },
-    { score: 4, label: 'Very Strong', color: 'bg-emerald-600' },
-  ];
-
-  return levels[Math.min(score, 4) - 1] ?? { score: 0, label: '', color: '' };
-};
-
-// (Use the Font Awesome `google` brand icon via the Icon helper)
-
-// ── FormInput ─────────────────────────────────────────────────────────────────
-const FormInput = ({
-  id,
-  label,
-  type,
-  value,
-  onChange,
-  onBlur,
-  icon,
-  placeholder,
-  error,
-  rightSlot,
-}: {
-  id: string;
-  label: string;
-  type: string;
-  value: string;
-  placeholder: string;
-  onChange: (v: string) => void;
-  onBlur?: () => void;
-  icon: IconName;
-  error?: string;
-  rightSlot?: React.ReactNode;
-}) => (
-  <div>
-    <label
-      htmlFor={id}
-      className="block text-sm font-medium text-text-primary-light dark:text-text-primary-dark mb-1.5"
-    >
-      {label}
-    </label>
-    <div className="relative">
-      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary-light dark:text-text-secondary-dark text-lg pointer-events-none">
-        <Icon name={icon} />
-      </span>
-      <input
-        id={id}
-        type={type}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        onBlur={onBlur}
-        placeholder={placeholder}
-        className={`w-full pl-10 ${rightSlot ? 'pr-10' : 'pr-4'} py-2.5 rounded-lg border text-sm transition-all focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent ${
-          error
-            ? 'border-red-400 dark:border-red-600 bg-red-50 dark:bg-red-950/20'
-            : 'border-border-light dark:border-border-dark bg-gray-50 dark:bg-gray-800'
-        } text-text-primary-light dark:text-text-primary-dark placeholder:text-text-secondary-light dark:placeholder:text-text-secondary-dark`}
-      />
-      {rightSlot && (
-        <div className="absolute right-3 top-1/2 -translate-y-1/2">
-          {rightSlot}
-        </div>
-      )}
-    </div>
-    {error && (
-      <p className="mt-1 text-xs text-red-600 dark:text-red-400 flex items-center gap-1">
-        <Icon name="error_outline" className="text-xs" />
-        {error}
-      </p>
-    )}
-  </div>
-);
-
-// ── Main Component ────────────────────────────────────────────────────────────
-export const SignupPage = () => {
+const SignupPage = () => {
+  // define required states
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -120,7 +22,7 @@ export const SignupPage = () => {
   const navigate = useNavigate();
   const strength = getPasswordStrength(password);
 
-  // ── Field validators ──
+  // form-field validators
   const validators: Record<string, () => boolean> = {
     name: () => {
       if (!name.trim()) {
@@ -197,21 +99,27 @@ export const SignupPage = () => {
     },
   };
 
+  // formSubmission handlers
   const handleSubmit = async (e: React.FormEvent) => {
+    // prevent default submission
     e.preventDefault();
-    const allValid = Object.values(validators).every((fn) => fn());
-    if (!allValid) return;
+
+    const areAllValidated = Object.values(validators).every((fn) => fn());
+    if (!areAllValidated) return;
+
     if (!agreeTerms) {
       setGlobalError('Please agree to the Terms and Privacy Policy');
       return;
     }
+
     setGlobalError('');
     setLoading(true);
+
     try {
       await registerUser(email, password, name);
       navigate('/dashboard');
     } catch (err: any) {
-      setGlobalError(getFirebaseErrorMessage(err?.code ?? ''));
+      setGlobalError(getSignupPageErrorMsg(err?.code ?? ''));
     } finally {
       setLoading(false);
     }
@@ -220,11 +128,12 @@ export const SignupPage = () => {
   const handleGoogleSignUp = async () => {
     setGlobalError('');
     setGoogleLoading(true);
+
     try {
       await signInWithGoogle();
       navigate('/dashboard');
     } catch (err: any) {
-      setGlobalError(getFirebaseErrorMessage(err?.code ?? '') || err.message);
+      setGlobalError(getSignupPageErrorMsg(err?.code ?? '') || err.message);
     } finally {
       setGoogleLoading(false);
     }
@@ -232,7 +141,7 @@ export const SignupPage = () => {
 
   return (
     <div className="min-h-screen flex bg-background-light dark:bg-background-dark">
-      {/* ── Left Branding Panel ──────────────────────────────────────── */}
+      {/* Left Branding Panel */}
       <div className="hidden lg:flex flex-col justify-between w-[420px] flex-shrink-0 bg-gradient-to-br from-indigo-600 via-indigo-700 to-purple-800 p-12 relative overflow-hidden">
         <div className="absolute -top-16 -left-16 w-64 h-64 rounded-full bg-white/5" />
         <div className="absolute bottom-8 -right-16 w-72 h-72 rounded-full bg-white/5" />
@@ -277,7 +186,7 @@ export const SignupPage = () => {
         </p>
       </div>
 
-      {/* ── Right Form Panel ─────────────────────────────────────────── */}
+      {/* Right Form Panel */}
       <div className="flex-1 flex items-center justify-center p-6 lg:p-12 overflow-y-auto">
         <div className="w-full max-w-[440px] space-y-5 py-6">
           {/* Mobile logo */}
@@ -293,6 +202,7 @@ export const SignupPage = () => {
             </span>
           </div>
 
+          {/* Heading & Para */}
           <div>
             <h1 className="text-2xl font-bold text-text-primary-light dark:text-text-primary-dark">
               Create your account
@@ -314,9 +224,10 @@ export const SignupPage = () => {
             ) : (
               <Icon name="google" className="w-5 h-5 flex-shrink-0" />
             )}
-            Continue with Google
+            Sign up with Google
           </button>
 
+          {/* Divider */}
           <div className="flex items-center gap-3">
             <div className="flex-1 h-px bg-border-light dark:bg-border-dark" />
             <span className="text-xs text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wide">
@@ -338,7 +249,9 @@ export const SignupPage = () => {
             </div>
           )}
 
+          {/* Signup Form */}
           <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+            {/* Name field */}
             <FormInput
               id="signup-name"
               label="Full Name"
@@ -350,9 +263,11 @@ export const SignupPage = () => {
               }}
               onBlur={() => validators.name()}
               icon="person"
-              placeholder="Ganesh Kumar"
+              placeholder="John Doe"
               error={errors.name}
             />
+
+            {/* Email field */}
             <FormInput
               id="signup-email"
               label="Email Address"
@@ -367,6 +282,8 @@ export const SignupPage = () => {
               placeholder="name@example.com"
               error={errors.email}
             />
+
+            {/* Password field */}
             <div>
               <FormInput
                 id="signup-password"
@@ -418,6 +335,7 @@ export const SignupPage = () => {
               )}
             </div>
 
+            {/* Confirm Password field */}
             <FormInput
               id="signup-confirm-password"
               label="Confirm Password"
@@ -500,13 +418,14 @@ export const SignupPage = () => {
             </button>
           </form>
 
+          {/* Already Signed-up */}
           <p className="text-center text-sm text-text-secondary-light dark:text-text-secondary-dark">
             Already have an account?{' '}
             <Link
               to="/login"
               className="font-semibold text-indigo-500 hover:text-indigo-600 transition-colors"
             >
-              Sign in
+              Log In
             </Link>
           </p>
 
@@ -521,3 +440,5 @@ export const SignupPage = () => {
     </div>
   );
 };
+
+export { SignupPage };

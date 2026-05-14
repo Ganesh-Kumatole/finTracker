@@ -50,7 +50,7 @@ const HeaderComponent = ({ user }: { user: FirebaseUser | null }) => {
                   to="/login"
                   className="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark transition-colors"
                 >
-                  Log in
+                  Log In
                 </Link>
                 <Link
                   to="/signup"

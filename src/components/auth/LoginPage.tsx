@@ -1,103 +1,12 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { loginUser, signInWithGoogle } from '@/services/firebase/auth';
 import Icon, { IconName } from '@/components/common/Icon';
+import FormInput from '@/components/common/FormInput';
+import { getLoginPageErrorMsg } from './helpers';
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
-const getFirebaseErrorMessage = (code: string): string => {
-  const messages: Record<string, string> = {
-    'auth/user-not-found': 'No account found with this email.',
-    'auth/wrong-password': 'Incorrect password. Please try again.',
-    'auth/invalid-email': 'Please enter a valid email address.',
-    'auth/user-disabled': 'This account has been disabled.',
-    'auth/too-many-requests': 'Too many attempts. Please try again later.',
-    'auth/invalid-credential': 'Invalid email or password.',
-    'auth/network-request-failed': 'Network error. Check your connection.',
-  };
-  return messages[code] || 'Sign-in failed. Please try again.';
-};
-
-// ── Feature list for the left panel ──────────────────────────────────────────
-const features: { icon: IconName; text: string }[] = [
-  {
-    icon: 'account_balance_wallet',
-    text: 'Track all transactions in real-time',
-  },
-  { icon: 'pie_chart', text: 'Smart budget management & alerts' },
-  { icon: 'insights', text: 'AI-powered financial insights' },
-  { icon: 'currency_exchange', text: 'Multi-currency support (INR / USD)' },
-];
-
-// (Use the Font Awesome `google` brand icon via the Icon helper)
-
-// ── Input Field ───────────────────────────────────────────────────────────────
-const FormInput = ({
-  id,
-  label,
-  type,
-  value,
-  onChange,
-  onBlur,
-  icon,
-  placeholder,
-  error,
-  rightSlot,
-}: {
-  id: string;
-  label: string;
-  type: string;
-  value: string;
-  placeholder: string;
-  onChange: (v: string) => void;
-  onBlur?: () => void;
-  icon: IconName;
-  error?: string;
-  rightSlot?: React.ReactNode;
-}) => (
-  <div>
-    <label
-      htmlFor={id}
-      className="block text-sm font-medium text-text-primary-light dark:text-text-primary-dark mb-1.5"
-    >
-      {label}
-    </label>
-    <div className="relative">
-      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary-light dark:text-text-secondary-dark text-lg pointer-events-none">
-        <Icon
-          name={icon}
-          className="text-text-secondary-light dark:text-text-secondary-dark text-lg pointer-events-none"
-        />
-      </span>
-      <input
-        id={id}
-        type={type}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        onBlur={onBlur}
-        placeholder={placeholder}
-        className={`w-full pl-10 ${rightSlot ? 'pr-10' : 'pr-4'} py-2.5 rounded-lg border text-sm transition-all focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent ${
-          error
-            ? 'border-red-400 dark:border-red-600 bg-red-50 dark:bg-red-950/20'
-            : 'border-border-light dark:border-border-dark bg-gray-50 dark:bg-gray-800'
-        } text-text-primary-light dark:text-text-primary-dark placeholder:text-text-secondary-light dark:placeholder:text-text-secondary-dark`}
-      />
-      {rightSlot && (
-        <div className="absolute right-3 top-1/2 -translate-y-1/2">
-          {rightSlot}
-        </div>
-      )}
-    </div>
-    {error && (
-      <p className="mt-1 text-xs text-red-600 dark:text-red-400 flex items-center gap-1">
-        <Icon name="error_outline" className="text-xs" />
-        {error}
-      </p>
-    )}
-  </div>
-);
-
-// ── Main Component ────────────────────────────────────────────────────────────
-export const LoginPage = () => {
+const LoginPage = () => {
+  // define required states
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -107,39 +16,43 @@ export const LoginPage = () => {
   const [globalError, setGlobalError] = useState('');
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
+
   const navigate = useNavigate();
-  const emailRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    emailRef.current?.focus();
-  }, []);
+  // form field validators
+  const validators: Record<string, (data: string) => boolean> = {
+    email: (email) => {
+      if (!email) {
+        setEmailError('Email is required');
+        return false;
+      }
 
-  // Inline validation on blur
-  const validateEmail = (v = email) => {
-    if (!v) {
-      setEmailError('Email is required');
-      return false;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) {
-      setEmailError('Enter a valid email address');
-      return false;
-    }
-    setEmailError('');
-    return true;
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        setEmailError('Enter a valid email address');
+        return false;
+      }
+
+      setEmailError('');
+      return true;
+    },
+    password: (password) => {
+      if (!password) {
+        setPasswordError('Password is required');
+        return false;
+      }
+
+      setPasswordError('');
+      return true;
+    },
   };
-  const validatePassword = (v = password) => {
-    if (!v) {
-      setPasswordError('Password is required');
-      return false;
-    }
-    setPasswordError('');
-    return true;
-  };
 
+  // formSubmission handlers
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const ok = validateEmail() && validatePassword();
+
+    const ok = validators.email(email) && validators.password(password);
     if (!ok) return;
+
     setGlobalError('');
     setLoading(true);
     try {
@@ -149,7 +62,7 @@ export const LoginPage = () => {
       sessionStorage.removeItem('fintracker-return-url');
       navigate(returnUrl);
     } catch (err: any) {
-      setGlobalError(getFirebaseErrorMessage(err?.code ?? ''));
+      setGlobalError(getLoginPageErrorMsg(err?.code ?? ''));
     } finally {
       setLoading(false);
     }
@@ -162,7 +75,7 @@ export const LoginPage = () => {
       const { isNewUser } = await signInWithGoogle();
       navigate(isNewUser ? '/signup' : '/dashboard');
     } catch (err: any) {
-      setGlobalError(getFirebaseErrorMessage(err?.code ?? '') || err.message);
+      setGlobalError(getLoginPageErrorMsg(err?.code ?? '') || err.message);
     } finally {
       setGoogleLoading(false);
     }
@@ -198,10 +111,24 @@ export const LoginPage = () => {
         </div>
 
         <div className="space-y-4 relative z-10">
-          {features.map((f, i) => (
+          {[
+            {
+              icon: 'account_balance_wallet',
+              text: 'Track all transactions in real-time',
+            },
+            { icon: 'pie_chart', text: 'Smart budget management & alerts' },
+            { icon: 'insights', text: 'AI-powered financial insights' },
+            {
+              icon: 'currency_exchange',
+              text: 'Multi-currency support (INR / USD)',
+            },
+          ].map((f, i) => (
             <div key={i} className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-white/15 flex items-center justify-center flex-shrink-0">
-                <Icon name={f.icon} className="text-white text-base" />
+                <Icon
+                  name={f.icon as IconName}
+                  className="text-white text-base"
+                />
               </div>
               <p className="text-sm text-indigo-100">{f.text}</p>
             </div>
@@ -229,12 +156,13 @@ export const LoginPage = () => {
             </span>
           </div>
 
+          {/* Header & Para */}
           <div>
             <h1 className="text-2xl font-bold text-text-primary-light dark:text-text-primary-dark">
               Welcome back
             </h1>
             <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark mt-1">
-              Sign in to your account to continue.
+              Log In to your account to continue.
             </p>
           </div>
 
@@ -250,9 +178,10 @@ export const LoginPage = () => {
             ) : (
               <Icon name="google" className="w-5 h-5 flex-shrink-0" />
             )}
-            Continue with Google
+            Log In with Google
           </button>
 
+          {/* Divider */}
           <div className="flex items-center gap-3">
             <div className="flex-1 h-px bg-border-light dark:bg-border-dark" />
             <span className="text-xs text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wide">
@@ -271,7 +200,9 @@ export const LoginPage = () => {
             </div>
           )}
 
+          {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+            {/* Email field */}
             <FormInput
               id="login-email"
               label="Email Address"
@@ -279,13 +210,15 @@ export const LoginPage = () => {
               value={email}
               onChange={(v) => {
                 setEmail(v);
-                if (emailError) validateEmail(v);
+                if (emailError) validators.email(v);
               }}
-              onBlur={() => validateEmail()}
+              onBlur={() => validators.email(email)}
               icon="mail"
               placeholder="name@example.com"
               error={emailError}
             />
+
+            {/* Password field */}
             <FormInput
               id="login-password"
               label="Password"
@@ -293,7 +226,7 @@ export const LoginPage = () => {
               value={password}
               onChange={(v) => {
                 setPassword(v);
-                if (passwordError) validatePassword(v);
+                if (passwordError) validators.password(v);
               }}
               icon="lock"
               placeholder="••••••••"
@@ -322,8 +255,9 @@ export const LoginPage = () => {
                   Remember me
                 </span>
               </label>
+
               <Link
-                to="/forgot-password"
+                to="/login"
                 className="text-sm font-medium text-indigo-500 hover:text-indigo-600 transition-colors"
               >
                 Forgot password?
@@ -336,7 +270,7 @@ export const LoginPage = () => {
               className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm shadow-sm hover:shadow-md transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading && <Icon name="refresh" spin className="text-base" />}
-              {loading ? 'Signing in…' : 'Sign in'}
+              {loading ? 'Logging In…' : 'Log In'}
             </button>
           </form>
 
@@ -372,3 +306,5 @@ export const LoginPage = () => {
     </div>
   );
 };
+
+export { LoginPage };
