@@ -13,9 +13,18 @@ import {
   Filler,
 } from 'chart.js';
 import { Line, Doughnut, Bar } from 'react-chartjs-2';
-import { useThemeContext } from '@/context/ThemeContext';
-import { useCurrencyContext } from '@/context/CurrencyContext';
+import { useThemeContext, useCurrencyContext } from '@/context';
+import {
+  CHART_PALETTE,
+  LINE_CHART_COLORS,
+  BUDGET_CHART_COLORS,
+  getTextColor,
+  getGridColor,
+  getBorderColor,
+  CHART_CONFIG,
+} from './chartColors';
 
+// Register ChartJS components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -29,20 +38,7 @@ ChartJS.register(
   Filler,
 );
 
-// ── Shared palette ─────────────────────────────────────────────────────────────
-const PALETTE = [
-  '#6366f1',
-  '#f97316',
-  '#f43f5e',
-  '#34d399',
-  '#a78bfa',
-  '#f59e0b',
-  '#ef4444',
-  '#06b6d4',
-  '#84cc16',
-];
-
-// ── Line Chart: Income vs Expenses ────────────────────────────────────────────
+// Line Chart: Income vs Expense trend
 type LineChartProps = { labels: string[]; income: number[]; expense: number[] };
 
 export const LineChart: React.FC<LineChartProps> = ({
@@ -52,9 +48,8 @@ export const LineChart: React.FC<LineChartProps> = ({
 }) => {
   const { theme } = useThemeContext();
   const { symbol } = useCurrencyContext();
-  const isDark = theme === 'dark';
-  const ct = isDark ? '#94a3b8' : '#64748b';
-  const cg = isDark ? 'rgba(148,163,184,0.10)' : 'rgba(100,116,139,0.10)';
+  const textColor = getTextColor(theme as any, 'primary');
+  const gridColor = getGridColor(theme as any);
 
   const data = {
     labels,
@@ -62,8 +57,8 @@ export const LineChart: React.FC<LineChartProps> = ({
       {
         label: 'Income',
         data: income,
-        borderColor: '#22c55e',
-        backgroundColor: 'rgba(34,197,94,0.10)',
+        borderColor: LINE_CHART_COLORS.income.border,
+        backgroundColor: LINE_CHART_COLORS.income.background,
         tension: 0.4,
         fill: true,
         pointRadius: 3,
@@ -73,8 +68,8 @@ export const LineChart: React.FC<LineChartProps> = ({
       {
         label: 'Expense',
         data: expense,
-        borderColor: '#ef4444',
-        backgroundColor: 'rgba(239,68,68,0.08)',
+        borderColor: LINE_CHART_COLORS.expense.border,
+        backgroundColor: LINE_CHART_COLORS.expense.background,
         tension: 0.4,
         fill: true,
         pointRadius: 3,
@@ -85,11 +80,15 @@ export const LineChart: React.FC<LineChartProps> = ({
   };
 
   const options = {
-    responsive: true,
-    maintainAspectRatio: false,
+    ...CHART_CONFIG.common,
     plugins: {
       legend: {
-        labels: { color: ct, boxWidth: 12, padding: 12, font: { size: 12 } },
+        labels: {
+          color: textColor,
+          boxWidth: CHART_CONFIG.spacing.boxWidth,
+          padding: CHART_CONFIG.spacing.padding,
+          font: { size: CHART_CONFIG.font.medium },
+        },
       },
       tooltip: {
         callbacks: {
@@ -99,11 +98,14 @@ export const LineChart: React.FC<LineChartProps> = ({
       },
     },
     scales: {
-      x: { ticks: { color: ct, font: { size: 11 } }, grid: { color: cg } },
+      x: {
+        ticks: { color: textColor, font: { size: CHART_CONFIG.font.small } },
+        grid: { color: gridColor },
+      },
       y: {
         beginAtZero: true,
-        ticks: { color: ct, callback: (v: any) => `${symbol}${v}` },
-        grid: { color: cg },
+        ticks: { color: textColor, callback: (v: any) => `${symbol}${v}` },
+        grid: { color: gridColor },
       },
     },
   };
@@ -111,35 +113,41 @@ export const LineChart: React.FC<LineChartProps> = ({
   return <Line data={data} options={options} />;
 };
 
-// ── Donut Chart: Category breakdown ────────────────────────────────────────────
+// Donut Chart: Category breakdown
 type DonutChartProps = { labels: string[]; data: number[] };
 
 export const DonutChart: React.FC<DonutChartProps> = ({ labels, data }) => {
   const { theme } = useThemeContext();
   const { formatAmount } = useCurrencyContext();
-  const isDark = theme === 'dark';
-  const ct = isDark ? '#94a3b8' : '#64748b';
+  const textColor = getTextColor(theme as any, 'primary');
+  const borderColor = getBorderColor(theme as any);
 
   const chartData = {
     labels,
     datasets: [
       {
         data,
-        backgroundColor: labels.map((_, i) => PALETTE[i % PALETTE.length]),
+        backgroundColor: labels.map(
+          (_, i) => CHART_PALETTE[i % CHART_PALETTE.length],
+        ),
         hoverOffset: 8,
         borderWidth: 2,
-        borderColor: isDark ? '#1e293b' : '#ffffff',
+        borderColor: borderColor,
       },
     ],
   };
 
   const options = {
-    responsive: true,
-    maintainAspectRatio: false,
+    ...CHART_CONFIG.common,
     plugins: {
       legend: {
         position: 'right' as const,
-        labels: { color: ct, boxWidth: 12, padding: 10, font: { size: 11 } },
+        labels: {
+          color: textColor,
+          boxWidth: CHART_CONFIG.spacing.boxWidth,
+          padding: CHART_CONFIG.spacing.padding - 2,
+          font: { size: CHART_CONFIG.font.small },
+        },
       },
       tooltip: {
         callbacks: {
@@ -152,7 +160,7 @@ export const DonutChart: React.FC<DonutChartProps> = ({ labels, data }) => {
   return <Doughnut data={chartData} options={options} />;
 };
 
-// ── Bar Chart: Budget vs Actual ────────────────────────────────────────────────
+// Bar Chart: Budget vs Actual
 type BarChartProps = { labels: string[]; budgeted: number[]; actual: number[] };
 
 export const BudgetBarChart: React.FC<BarChartProps> = ({
@@ -162,9 +170,8 @@ export const BudgetBarChart: React.FC<BarChartProps> = ({
 }) => {
   const { theme } = useThemeContext();
   const { symbol } = useCurrencyContext();
-  const isDark = theme === 'dark';
-  const ct = isDark ? '#94a3b8' : '#64748b';
-  const cg = isDark ? 'rgba(148,163,184,0.10)' : 'rgba(100,116,139,0.10)';
+  const textColor = getTextColor(theme as any, 'primary');
+  const gridColor = getGridColor(theme as any);
 
   const data = {
     labels,
@@ -172,8 +179,8 @@ export const BudgetBarChart: React.FC<BarChartProps> = ({
       {
         label: 'Budgeted',
         data: budgeted,
-        backgroundColor: 'rgba(99,102,241,0.5)',
-        borderColor: '#6366f1',
+        backgroundColor: BUDGET_CHART_COLORS.budgeted.background,
+        borderColor: BUDGET_CHART_COLORS.budgeted.border,
         borderWidth: 1,
         borderRadius: 4,
       },
@@ -181,10 +188,14 @@ export const BudgetBarChart: React.FC<BarChartProps> = ({
         label: 'Actual',
         data: actual,
         backgroundColor: actual.map((v, i) =>
-          v > budgeted[i] ? 'rgba(239,68,68,0.7)' : 'rgba(34,197,94,0.6)',
+          v > budgeted[i]
+            ? BUDGET_CHART_COLORS.actualOver.background
+            : BUDGET_CHART_COLORS.actualUnder.background,
         ),
         borderColor: actual.map((v, i) =>
-          v > budgeted[i] ? '#ef4444' : '#22c55e',
+          v > budgeted[i]
+            ? BUDGET_CHART_COLORS.actualOver.border
+            : BUDGET_CHART_COLORS.actualUnder.border,
         ),
         borderWidth: 1,
         borderRadius: 4,
@@ -193,11 +204,15 @@ export const BudgetBarChart: React.FC<BarChartProps> = ({
   };
 
   const options = {
-    responsive: true,
-    maintainAspectRatio: false,
+    ...CHART_CONFIG.common,
     plugins: {
       legend: {
-        labels: { color: ct, boxWidth: 12, padding: 12, font: { size: 11 } },
+        labels: {
+          color: textColor,
+          boxWidth: CHART_CONFIG.spacing.boxWidth,
+          padding: CHART_CONFIG.spacing.padding,
+          font: { size: CHART_CONFIG.font.small },
+        },
       },
       tooltip: {
         callbacks: {
@@ -208,18 +223,16 @@ export const BudgetBarChart: React.FC<BarChartProps> = ({
     },
     scales: {
       x: {
-        ticks: { color: ct, font: { size: 11 } },
+        ticks: { color: textColor, font: { size: CHART_CONFIG.font.small } },
         grid: { color: 'transparent' },
       },
       y: {
         beginAtZero: true,
-        ticks: { color: ct, callback: (v: any) => `${symbol}${v}` },
-        grid: { color: cg },
+        ticks: { color: textColor, callback: (v: any) => `${symbol}${v}` },
+        grid: { color: gridColor },
       },
     },
   };
 
   return <Bar data={data} options={options} />;
 };
-
-export default { LineChart, DonutChart, BudgetBarChart };

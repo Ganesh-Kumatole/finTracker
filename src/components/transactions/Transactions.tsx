@@ -3,7 +3,7 @@ import { useTransactions } from '@/hooks';
 import { formatDate } from '@/utils/formatters';
 import { useCurrencyContext } from '@/context/CurrencyContext';
 import { Transaction } from '@/types';
-import AddTransactionModal from './AddTransactionModal';
+import { AddTransactionModal } from './AddTransactionModal';
 import EditTransactionModal from './EditTransactionModal';
 
 // ── Types ──────────────────────────────────────────────────────────────────────

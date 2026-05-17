@@ -1,17 +1,6 @@
 import { FC } from 'react';
 import { NewsCategory } from '@/services/news/newsService';
-
-interface NewsCardProps {
-  title: string;
-  description: string;
-  source: string;
-  publishedAt: string;
-  imageUrl: string;
-  category: NewsCategory;
-  url: string;
-  relevance: number;
-  country?: string;
-}
+import { NewsCardProps } from '@/types/dashboard';
 
 const categoryConfig: Record<
   NewsCategory,

@@ -4,3 +4,8 @@ export * from './useBudgets';
 export * from './useDashboard';
 export * from './useNotifications';
 export * from './useInsights';
+export * from './useDashboardMetrics';
+export * from './useDashboardCharts';
+export * from './useNewsData';
+export * from './useModal';
+export * from './useToast';

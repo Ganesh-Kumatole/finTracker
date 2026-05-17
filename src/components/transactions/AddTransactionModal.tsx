@@ -360,5 +360,3 @@ export const AddTransactionModal = ({ isOpen, onClose, onCreate }: Props) => {
     </div>
   );
 };
-
-export default AddTransactionModal;
