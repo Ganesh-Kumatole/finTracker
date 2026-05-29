@@ -90,7 +90,7 @@ export const EditBudgetModal = ({
                 onChange={(e) => setLimitAmount(e.target.value)}
                 min="1"
                 step="0.01"
-                className="w-full pl-8 pr-4 py-2.5 border border-border-light dark:border-border-dark bg-gray-50 dark:bg-gray-800 rounded-lg text-sm text-text-primary-light dark:text-text-primary-dark focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition-all"
+                className="w-full pl-8 pr-4 py-2.5 border border-border-light dark:border-border-dark bg-gray-50 dark:bg-gray-800 rounded-lg text-sm text-text-primary-light dark:text-text-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
               />
             </div>
           </div>
@@ -108,8 +108,8 @@ export const EditBudgetModal = ({
                   }
                   className={`flex-1 py-2 rounded-lg text-sm font-medium border transition-colors ${
                     notificationThreshold === t
-                      ? 'bg-indigo-600 text-white border-indigo-600'
-                      : 'border-border-light dark:border-border-dark text-text-secondary-light dark:text-text-secondary-dark hover:border-indigo-400'
+                      ? 'bg-primary text-white border-primary'
+                      : 'border-border-light dark:border-border-dark text-text-secondary-light dark:text-text-secondary-dark hover:border-primary'
                   }`}
                 >
                   {t}%
@@ -125,7 +125,7 @@ export const EditBudgetModal = ({
             <select
               value={period}
               onChange={(e) => setPeriod(e.target.value as BudgetPeriod)}
-              className="w-full px-3 py-2.5 border border-border-light dark:border-border-dark bg-gray-50 dark:bg-gray-800 rounded-lg text-sm text-text-primary-light dark:text-text-primary-dark focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent"
+              className="w-full px-3 py-2.5 border border-border-light dark:border-border-dark bg-gray-50 dark:bg-gray-800 rounded-lg text-sm text-text-primary-light dark:text-text-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             >
               <option value="weekly">Weekly</option>
               <option value="monthly">Monthly</option>
@@ -155,7 +155,7 @@ export const EditBudgetModal = ({
           <button
             onClick={handleSave}
             disabled={saving || !limitAmount || Number(limitAmount) <= 0}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium transition-colors disabled:opacity-50"
+            className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-primary hover:bg-primary-hover text-white text-sm font-medium transition-colors disabled:opacity-50"
           >
             {saving && (
               <span className="material-icons text-base animate-spin">

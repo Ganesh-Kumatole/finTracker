@@ -67,7 +67,7 @@ export const AIChatSection = ({ stats }: { stats: FinancialStats }) => {
   return (
     <SectionCard className="flex flex-col overflow-hidden !p-0">
       <div className="flex items-center gap-2 px-6 pt-6 pb-4 border-b border-border-light dark:border-border-dark">
-        <span className="material-icons text-indigo-500">forum</span>
+        <span className="material-icons text-primary">forum</span>
         <h2 className="text-lg font-semibold text-text-primary-light dark:text-text-primary-dark">
           Ask Your Finance AI
         </h2>
@@ -86,12 +86,12 @@ export const AIChatSection = ({ stats }: { stats: FinancialStats }) => {
             <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark">
               Try one of these:
             </p>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-3">
               {SUGGESTED_QUESTIONS.map((q) => (
                 <button
                   key={q}
                   onClick={() => sendMessage(q)}
-                  className="text-xs px-3 py-1.5 rounded-full border border-indigo-200 dark:border-indigo-700 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 transition-colors"
+                  className="text-xs px-4 py-2 rounded-full border border-blue-200 dark:border-blue-700 bg-blue-50 dark:bg-blue-900/30 text-primary dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/60 transition-colors"
                 >
                   {q}
                 </button>
@@ -105,14 +105,14 @@ export const AIChatSection = ({ stats }: { stats: FinancialStats }) => {
               className={`flex gap-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               {msg.role === 'assistant' && (
-                <span className="material-icons text-indigo-500 text-base mt-1 flex-shrink-0">
+                <span className="material-icons text-primary text-base mt-1 flex-shrink-0">
                   auto_awesome
                 </span>
               )}
               <div
                 className={`max-w-[80%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${
                   msg.role === 'user'
-                    ? 'bg-indigo-600 text-white rounded-br-sm'
+                    ? 'bg-primary text-white rounded-br-sm'
                     : 'bg-gray-100 dark:bg-gray-800 text-text-primary-light dark:text-text-primary-dark rounded-bl-sm'
                 }`}
               >
@@ -132,7 +132,7 @@ export const AIChatSection = ({ stats }: { stats: FinancialStats }) => {
         <div ref={messagesEndRef} />
       </div>
       <div className="px-6 pb-6 pt-2">
-        <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 rounded-xl px-4 py-2.5 border border-transparent focus-within:border-indigo-400 dark:focus-within:border-indigo-600 transition-colors">
+        <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 rounded-xl px-4 py-2.5 border border-transparent focus-within:border-primary dark:focus-within:border-primary transition-colors">
           <input
             id="ai-chat-input"
             type="text"
@@ -152,7 +152,7 @@ export const AIChatSection = ({ stats }: { stats: FinancialStats }) => {
             id="ai-chat-send-btn"
             onClick={() => sendMessage(input)}
             disabled={!input.trim() || isAsking}
-            className="p-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex-shrink-0"
+            className="p-1.5 rounded-lg bg-primary text-white hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex-shrink-0"
           >
             <span className="material-icons text-sm">
               {isAsking ? 'hourglass_empty' : 'send'}

@@ -3,16 +3,16 @@ export type Theme = 'light' | 'dark';
 
 // Semantic color palette
 export const SEMANTIC_COLORS = {
-  success: '#22c55e',
-  error: '#ef4444',
-  warning: '#f59e0b',
-  info: '#06b6d4',
-  primary: '#6366f1',
-  accent1: '#f97316',
-  accent2: '#f43f5e',
-  accent3: '#34d399',
-  accent4: '#a78bfa',
-  accent5: '#84cc16',
+  success: '#10b981', // Emerald
+  error: '#e11d48', // Rose/Coral
+  warning: '#f59e0b', // Amber
+  info: '#0284c7', // Sky
+  primary: '#006FEE', // Azure
+  accent1: '#0ea5e9', // Blue
+  accent2: '#6366f1', // Indigo muted
+  accent3: '#14b8a6', // Teal
+  accent4: '#8b5cf6', // Violet muted
+  accent5: '#f43f5e', // Rose
 };
 
 // Multi-category chart palette
@@ -79,15 +79,15 @@ export const LINE_CHART_COLORS = {
 
 export const BUDGET_CHART_COLORS = {
   budgeted: {
-    background: 'rgba(99,102,241,0.5)',
-    border: SEMANTIC_COLORS.primary,
+    background: 'rgba(0,111,238,0.15)',
+    border: 'rgba(0,111,238,0.4)',
   },
   actualUnder: {
-    background: 'rgba(34,197,94,0.6)',
+    background: 'rgba(16,185,129,0.2)',
     border: SEMANTIC_COLORS.success,
   },
   actualOver: {
-    background: 'rgba(239,68,68,0.7)',
+    background: 'rgba(225,29,72,0.2)',
     border: SEMANTIC_COLORS.error,
   },
 };

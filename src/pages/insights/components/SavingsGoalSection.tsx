@@ -31,7 +31,7 @@ export const SavingsGoalSection = ({
     pct >= 100
       ? 'bg-emerald-500'
       : pct >= 60
-        ? 'bg-indigo-500'
+        ? 'bg-primary'
         : pct >= 30
           ? 'bg-amber-400'
           : 'bg-red-400';
@@ -99,7 +99,7 @@ export const SavingsGoalSection = ({
               setDraft(String(goal));
               setEditing(true);
             }}
-            className="text-xs text-indigo-500 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors"
+            className="text-xs text-primary hover:text-primary-hover dark:hover:text-primary-hover transition-colors"
           >
             Change goal
           </button>
@@ -128,7 +128,7 @@ export const SavingsGoalSection = ({
                   if (e.key === 'Escape') setEditing(false);
                 }}
                 placeholder="e.g. 500.00"
-                className="block w-full rounded-lg border border-border-light dark:border-border-dark bg-white dark:bg-gray-700 text-text-primary-light dark:text-text-primary-dark placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent text-sm pl-8 py-2.5 transition-all"
+                className="block w-full rounded-lg border border-border-light dark:border-border-dark bg-white dark:bg-gray-700 text-text-primary-light dark:text-text-primary-dark placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm pl-8 py-2.5 transition-all"
               />
             </div>
             <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-2">

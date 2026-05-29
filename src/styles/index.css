@@ -5,6 +5,9 @@
 @layer base {
   body {
     font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    @apply text-text-primary-light dark:text-text-primary-dark bg-background-light dark:bg-background-dark;
   }
 }
 

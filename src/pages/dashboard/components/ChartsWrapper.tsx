@@ -77,7 +77,7 @@ export const ChartsWrapper = ({
             </h3>
             <Link
               to="/budgets"
-              className="text-xs text-indigo-500 hover:text-indigo-600 font-medium transition-colors"
+              className="text-xs text-primary hover:text-primary-hover font-medium transition-colors"
             >
               Manage →
             </Link>
@@ -95,7 +95,7 @@ export const ChartsWrapper = ({
                 </p>
                 <Link
                   to="/budgets"
-                  className="text-xs text-indigo-500 font-medium mt-1"
+                  className="text-xs text-primary font-medium mt-1"
                 >
                   Create a budget →
                 </Link>
@@ -118,7 +118,7 @@ export const ChartsWrapper = ({
             </h3>
             <Link
               to="/transactions"
-              className="text-xs text-indigo-500 hover:text-indigo-600 font-medium transition-colors"
+              className="text-xs text-primary hover:text-primary-hover font-medium transition-colors"
             >
               View all →
             </Link>
@@ -146,7 +146,7 @@ export const ChartsWrapper = ({
               </p>
               <button
                 onClick={() => setShowAddTx(true)}
-                className="text-xs text-indigo-500 font-medium mt-1"
+                className="text-xs text-primary font-medium mt-1"
               >
                 Add your first transaction →
               </button>

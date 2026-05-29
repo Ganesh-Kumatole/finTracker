@@ -175,12 +175,12 @@ export const Insights = () => {
       <div ref={exportRef} className="space-y-8">
         {/* AI Summary Banner */}
         {aiLoading ? (
-          <div className="bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40 border border-indigo-200 dark:border-indigo-800 rounded-xl p-6 space-y-3">
+          <div className="bg-blue-50 dark:bg-blue-900/40 border-blue-200 dark:border-blue-800 rounded-xl p-6 space-y-3">
             <div className="flex items-center gap-3">
-              <span className="material-icons text-indigo-500 animate-spin text-xl">
+              <span className="material-icons text-primary animate-spin text-xl">
                 auto_awesome
               </span>
-              <span className="font-semibold text-indigo-700 dark:text-indigo-300">
+              <span className="font-semibold text-primary dark:text-indigo-300">
                 AI is analysing your finances…
               </span>
             </div>
@@ -203,12 +203,12 @@ export const Insights = () => {
             </div>
           </div>
         ) : aiSummary ? (
-          <div className="bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-950/40 dark:to-purple-950/40 border border-indigo-200 dark:border-indigo-800 rounded-xl p-6">
+          <div className="bg-blue-50 dark:bg-blue-900/40 border-blue-200 dark:border-blue-800 rounded-xl p-6">
             <div className="flex items-center gap-2 mb-3">
-              <span className="material-icons text-indigo-500 text-xl">
+              <span className="material-icons text-primary text-xl">
                 auto_awesome
               </span>
-              <span className="font-semibold text-indigo-700 dark:text-indigo-300 text-sm uppercase tracking-wider">
+              <span className="font-semibold text-primary dark:text-indigo-300 text-sm uppercase tracking-wider">
                 AI Financial Summary
               </span>
             </div>
@@ -247,7 +247,7 @@ export const Insights = () => {
           <StatCard
             id="stat-top-category"
             icon="category"
-            iconColor="text-purple-500"
+            iconColor="text-blue-600"
             label="Top Category"
             value={topCategories[0]?.name ?? '—'}
             sub={
@@ -341,7 +341,7 @@ export const Insights = () => {
               <div className="flex flex-col gap-4">
                 <div className="w-full h-5 rounded-full overflow-hidden flex">
                   <div
-                    className="bg-indigo-500 h-full transition-all duration-700"
+                    className="bg-primary h-full transition-all duration-700"
                     style={{ width: `${weekdayPct}%` }}
                   />
                   <div
@@ -352,7 +352,7 @@ export const Insights = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 rounded-full bg-indigo-500 flex-shrink-0" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-primary flex-shrink-0" />
                       <span className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
                         Weekdays
                       </span>
@@ -360,7 +360,7 @@ export const Insights = () => {
                     <p className="text-lg font-bold text-text-primary-light dark:text-text-primary-dark">
                       {formatAmount(weekdaySpend)}
                     </p>
-                    <p className="text-xs text-indigo-500 font-medium">
+                    <p className="text-xs text-primary font-medium">
                       {weekdayPct.toFixed(0)}%
                     </p>
                   </div>
@@ -395,7 +395,7 @@ export const Insights = () => {
           <SectionCard>
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-2">
-                <span className="material-icons text-indigo-500 text-xl">
+                <span className="material-icons text-primary text-xl">
                   account_balance
                 </span>
                 <h2 className="text-lg font-semibold text-text-primary-light dark:text-text-primary-dark">
@@ -486,7 +486,7 @@ export const Insights = () => {
               <ul className="space-y-4">
                 {aiTips.map((tip, i) => (
                   <li key={i} className="flex items-start gap-3 group">
-                    <span className="inline-flex items-center justify-center h-6 w-6 rounded-full bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 text-xs font-bold flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform">
+                    <span className="inline-flex items-center justify-center h-6 w-6 rounded-full bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-primary text-xs font-bold flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform">
                       {i + 1}
                     </span>
                     <p className="text-sm text-text-primary-light dark:text-text-primary-dark leading-relaxed">
@@ -583,7 +583,7 @@ export const Insights = () => {
                     {recurringExpenses.length} recurring expense
                     {recurringExpenses.length > 1 ? 's' : ''} detected
                   </p>
-                  <span className="text-xs font-semibold px-2 py-1 rounded-full bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400">
+                  <span className="text-xs font-semibold px-2 py-1 rounded-full bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-primary">
                     ~{formatAmount(recurringTotal)}/mo total
                   </span>
                 </div>
@@ -593,7 +593,7 @@ export const Insights = () => {
                     className="flex items-center justify-between gap-3 py-2.5 border-b border-border-light dark:border-border-dark last:border-0"
                   >
                     <div className="flex items-center gap-3 min-w-0">
-                      <span className="material-icons text-indigo-400 text-base flex-shrink-0">
+                      <span className="material-icons text-primary text-base flex-shrink-0">
                         repeat
                       </span>
                       <div className="min-w-0">

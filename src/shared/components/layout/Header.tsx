@@ -53,7 +53,7 @@ const Header = ({ toggleSidebar, title }: HeaderProps) => {
           className="flex items-center gap-2.5 pl-3 border-l border-border-light dark:border-border-dark hover:opacity-80 transition-opacity"
           title="Go to Settings"
         >
-          <div className="w-8 h-8 rounded-full overflow-hidden ring-2 ring-indigo-200 dark:ring-indigo-800 flex-shrink-0">
+          <div className="w-8 h-8 rounded-full overflow-hidden ring-1 ring-border-light dark:ring-border-dark flex-shrink-0 bg-surface-light dark:bg-surface-dark">
             {user?.photoURL ? (
               <img
                 src={user.photoURL}
@@ -61,7 +61,7 @@ const Header = ({ toggleSidebar, title }: HeaderProps) => {
                 className="w-full h-full object-cover"
               />
             ) : (
-              <div className="w-full h-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-xs font-bold">
+              <div className="w-full h-full bg-primary flex items-center justify-center text-white text-xs font-bold">
                 {getInitials(user?.displayName ?? user?.email)}
               </div>
             )}

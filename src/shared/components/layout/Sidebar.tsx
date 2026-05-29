@@ -58,7 +58,7 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
               to={item.path}
               end
               className={({ isActive }) =>
-                `flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-colors ${isActive ? 'bg-primary/10 text-primary dark:bg-primary/20 border-l-2 border-primary' : 'text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-primary border-l-2 border-transparent'}`
+                `flex items-center gap-3 px-4 py-3 text-sm rounded-lg transition-colors ${isActive ? 'bg-blue-50 text-primary dark:bg-slate-800 dark:text-blue-400 font-semibold shadow-sm' : 'font-medium text-text-secondary-light dark:text-text-secondary-dark hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-text-primary-light dark:hover:text-text-primary-dark'}`
               }
               onClick={() => window.innerWidth < 768 && toggleSidebar(false)}
             >

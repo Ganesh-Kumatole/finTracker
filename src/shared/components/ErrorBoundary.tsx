@@ -20,7 +20,7 @@ function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
           {(error as Error).message || 'An unexpected error occurred.'}
         </p>
         <details className="text-left mb-6">
-          <summary className="text-xs text-text-secondary-light dark:text-text-secondary-dark cursor-pointer hover:text-indigo-500 transition-colors">
+          <summary className="text-xs text-text-secondary-light dark:text-text-secondary-dark cursor-pointer hover:text-primary transition-colors">
             Show technical details
           </summary>
           <pre className="mt-2 text-xs bg-gray-100 dark:bg-gray-800 rounded-lg p-3 overflow-auto max-h-32 text-red-600 dark:text-red-400">
@@ -37,7 +37,7 @@ function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
           </button>
           <button
             onClick={() => window.location.reload()}
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-xl transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary-hover text-white text-sm font-medium rounded-xl transition-colors shadow-premium"
           >
             <span className="material-icons text-base">refresh</span>
             Reload Page

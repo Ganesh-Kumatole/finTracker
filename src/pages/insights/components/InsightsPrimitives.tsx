@@ -27,7 +27,7 @@ export const SectionTitle = ({
   children: React.ReactNode;
 }) => (
   <div className="flex items-center gap-2 mb-6">
-    <span className="material-icons text-indigo-500 text-xl">{icon}</span>
+    <span className="material-icons text-primary text-xl">{icon}</span>
     <h2 className="text-lg font-semibold text-text-primary-light dark:text-text-primary-dark">
       {children}
     </h2>
@@ -57,7 +57,7 @@ export const StatCard = ({
   >
     <div className="flex items-center justify-between">
       <span className={`material-icons text-2xl ${iconColor}`}>{icon}</span>
-      <span className="text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider">
+      <span className="text-xs font-medium bg-primary text-white px-2 py-0.5 rounded-full uppercase tracking-wider">
         {label}
       </span>
     </div>

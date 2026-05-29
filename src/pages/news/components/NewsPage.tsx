@@ -70,7 +70,7 @@ export function NewsPage() {
           </h1>
           <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark mt-1">
             Live market updates · Auto-refreshes in{' '}
-            <span className="font-medium text-indigo-500">
+            <span className="font-medium text-primary">
               {formatCountdown(refreshCountdown)}
             </span>
           </p>
@@ -80,8 +80,8 @@ export function NewsPage() {
             onClick={() => setShowSaved((s) => !s)}
             className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border text-sm font-medium transition-colors ${
               showSaved
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'border-border-light dark:border-border-dark text-text-secondary-light dark:text-text-secondary-dark hover:border-indigo-400'
+                ? 'bg-primary text-white border-primary'
+                : 'border-border-light dark:border-border-dark text-text-secondary-light dark:text-text-secondary-dark hover:border-primary'
             }`}
           >
             <span className="material-icons text-base">
@@ -97,7 +97,7 @@ export function NewsPage() {
           <button
             onClick={refreshNow}
             disabled={loading}
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-border-light dark:border-border-dark text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:border-indigo-400 transition-colors disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-border-light dark:border-border-dark text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:border-primary transition-colors disabled:opacity-50"
           >
             <span
               className={`material-icons text-base ${loading ? 'animate-spin' : ''}`}
@@ -120,7 +120,7 @@ export function NewsPage() {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder='Search articles… (press "/" to focus)'
-          className="w-full pl-10 pr-10 py-2.5 rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-sm text-text-primary-light dark:text-text-primary-dark placeholder:text-text-secondary-light dark:placeholder:text-text-secondary-dark focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition-all"
+          className="w-full pl-10 pr-10 py-2.5 rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-sm text-text-primary-light dark:text-text-primary-dark placeholder:text-text-secondary-light dark:placeholder:text-text-secondary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all"
         />
         {searchQuery && (
           <button
@@ -140,8 +140,8 @@ export function NewsPage() {
             onClick={() => setActiveCategory(cat.value)}
             className={`flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
               activeCategory === cat.value
-                ? 'bg-indigo-600 text-white shadow-sm'
-                : 'bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark hover:border-indigo-400'
+                ? 'bg-primary text-white shadow-sm'
+                : 'bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark hover:border-primary'
             }`}
           >
             <span className="material-icons-outlined text-sm">{cat.icon}</span>
@@ -180,7 +180,7 @@ export function NewsPage() {
                   }
                   className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${
                     selectedCountries.includes(c.code)
-                      ? 'bg-indigo-600 text-white'
+                      ? 'bg-primary text-white'
                       : 'bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-200 dark:hover:bg-gray-700'
                   }`}
                 >
@@ -236,7 +236,7 @@ export function NewsPage() {
                   }}
                   className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                     sortBy === opt.value
-                      ? 'bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300'
+                      ? 'bg-blue-50 dark:bg-blue-900/40 text-primary dark:text-blue-300'
                       : 'text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100 dark:hover:bg-gray-800'
                   }`}
                 >
@@ -259,7 +259,7 @@ export function NewsPage() {
             {selectedCountries.map((c) => (
               <span
                 key={c}
-                className="inline-flex items-center gap-1 px-2 py-0.5 bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 text-xs rounded-full"
+                className="inline-flex items-center gap-1 px-2 py-0.5 bg-blue-50 dark:bg-blue-900/40 text-primary dark:text-blue-300 text-xs rounded-full"
               >
                 {c}
                 <button
@@ -291,7 +291,7 @@ export function NewsPage() {
                 setCurrentPage('');
                 setPrevPages([]);
               }}
-              className="text-xs text-red-500 hover:text-red-600 font-medium ml-auto"
+              className="text-xs text-red-500 hover:text-primary-hover font-medium ml-auto"
             >
               Clear all
             </button>
@@ -367,7 +367,7 @@ export function NewsPage() {
                   }}
                   className={`absolute top-3 right-3 p-1.5 rounded-full shadow-md transition-all ${
                     savedIds.has(article.id)
-                      ? 'bg-indigo-600 text-white'
+                      ? 'bg-primary text-white'
                       : 'bg-white/80 dark:bg-gray-900/80 text-gray-500 dark:text-gray-400'
                   } opacity-0 group-hover:opacity-100`}
                   title={
@@ -402,7 +402,7 @@ export function NewsPage() {
             <button
               onClick={handleNextPage}
               disabled={!nextPageToken}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary hover:bg-primary-hover text-white text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
             >
               Next
               <span className="material-icons text-base">arrow_forward</span>
@@ -411,8 +411,8 @@ export function NewsPage() {
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center py-24 gap-4">
-          <div className="w-16 h-16 rounded-2xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center">
-            <span className="material-icons-outlined text-3xl text-indigo-400">
+          <div className="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center">
+            <span className="material-icons-outlined text-3xl text-primary">
               {showSaved ? 'bookmark_border' : 'newspaper'}
             </span>
           </div>
@@ -438,7 +438,7 @@ export function NewsPage() {
             showSaved) && (
             <button
               onClick={clearFilters}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-xl transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary-hover text-white text-sm font-medium rounded-xl transition-colors"
             >
               <span className="material-icons text-base">refresh</span>
               Clear all filters

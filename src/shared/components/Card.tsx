@@ -2,6 +2,7 @@ const Card = ({
   id,
   icon,
   iconBg,
+  iconColor,
   label,
   value,
   sub,
@@ -11,6 +12,7 @@ const Card = ({
   id: string;
   icon: string;
   iconBg: string;
+  iconColor: string;
   label: string;
   value: string;
   sub: string;
@@ -23,7 +25,7 @@ const Card = ({
   >
     <div className="flex items-center justify-between">
       <div className={`p-2.5 rounded-xl ${iconBg}`}>
-        <span className="material-icons text-white text-xl">{icon}</span>
+        <span className={`material-icons text-xl ${iconColor}`}>{icon}</span>
       </div>
       <span className="text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark">
         {label}

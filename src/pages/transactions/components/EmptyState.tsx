@@ -8,8 +8,8 @@ export const EmptyState = ({
   <tr>
     <td colSpan={7}>
       <div className="flex flex-col items-center justify-center py-16 px-4 gap-4">
-        <div className="w-16 h-16 rounded-2xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center">
-          <span className="material-icons text-3xl text-indigo-400">
+        <div className="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center">
+          <span className="material-icons text-3xl text-primary">
             {filtersActive ? 'filter_alt_off' : 'receipt_long'}
           </span>
         </div>

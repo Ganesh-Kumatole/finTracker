@@ -21,7 +21,7 @@ export const CATEGORY_COLORS: Record<string, string> = {
   'Food & Dining': 'bg-orange-500',
   Transportation: 'bg-blue-500',
   Utilities: 'bg-yellow-500',
-  Entertainment: 'bg-purple-500',
+  Entertainment: 'bg-violet-500',
   Healthcare: 'bg-red-500',
   Shopping: 'bg-pink-500',
   Education: 'bg-teal-500',

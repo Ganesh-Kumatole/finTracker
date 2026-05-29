@@ -46,7 +46,7 @@ const FormInput = ({
         onChange={(e) => onChange(e.target.value)}
         onBlur={onBlur}
         placeholder={placeholder}
-        className={`w-full pl-10 ${rightSlot ? 'pr-10' : 'pr-4'} py-2.5 rounded-lg border text-sm transition-all focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent ${
+        className={`w-full pl-10 ${rightSlot ? 'pr-10' : 'pr-4'} py-2.5 rounded-lg border text-sm transition-all focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary ${
           error
             ? 'border-red-400 dark:border-red-600 bg-red-50 dark:bg-red-950/20'
             : 'border-border-light dark:border-border-dark bg-gray-50 dark:bg-gray-800'

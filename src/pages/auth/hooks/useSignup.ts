@@ -9,7 +9,7 @@ export const useSignup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [agreeTerms, setAgreeTerms] = useState(false);
+
   
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [globalError, setGlobalError] = useState('');
@@ -107,21 +107,13 @@ export const useSignup = () => {
     if (errors.confirmPassword) validators.confirmPassword();
   };
 
-  const handleAgreeTermsChange = (checked: boolean) => {
-    setAgreeTerms(checked);
-    if (globalError) setGlobalError('');
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const areAllValidated = Object.values(validators).every((fn) => fn());
     if (!areAllValidated) return;
 
-    if (!agreeTerms) {
-      setGlobalError('Please agree to the Terms and Privacy Policy');
-      return;
-    }
+
 
     setGlobalError('');
     setLoading(true);
@@ -155,7 +147,6 @@ export const useSignup = () => {
     email,
     password,
     confirmPassword,
-    agreeTerms,
     errors,
     globalError,
     loading,
@@ -166,7 +157,6 @@ export const useSignup = () => {
     handleEmailChange,
     handlePasswordChange,
     handleConfirmPasswordChange,
-    handleAgreeTermsChange,
     handleSubmit,
     handleGoogleSignUp,
   };

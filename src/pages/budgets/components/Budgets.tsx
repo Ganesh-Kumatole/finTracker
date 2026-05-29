@@ -62,7 +62,7 @@ export const Budgets = () => {
         <button
           id="budgets-add-btn"
           onClick={() => setShowAddModal(true)}
-          className="inline-flex items-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-xl shadow-sm hover:shadow-md transition-all"
+          className="inline-flex items-center gap-2 px-4 py-2.5 bg-primary hover:bg-primary-hover text-white text-sm font-medium rounded-xl shadow-sm hover:shadow-md transition-all"
         >
           <span className="material-icons text-base">add</span>
           Add Budget
@@ -148,13 +148,13 @@ export const Budgets = () => {
 
       {/* Period filtering tabs */}
       {budgets.length > 0 && (
-        <div className="flex items-center gap-1 bg-gray-100 dark:bg-gray-800 rounded-xl p-1.5 border border-border-light dark:border-border-dark w-fit">
+        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1 bg-gray-100 dark:bg-gray-800 rounded-xl p-1.5 border border-border-light dark:border-border-dark w-full sm:w-fit">
           {(['all', 'monthly', 'weekly', 'yearly'] as PeriodFilter[]).map(
             (p) => (
               <button
                 key={p}
                 onClick={() => setPeriodFilter(p)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium capitalize transition-all ${
+                className={`flex-1 sm:flex-none text-center px-2 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium capitalize transition-all ${
                   periodFilter === p
                     ? 'bg-white dark:bg-gray-700 text-text-primary-light dark:text-text-primary-dark shadow-sm'
                     : 'text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark'
@@ -162,7 +162,7 @@ export const Budgets = () => {
               >
                 {p === 'all' ? 'All' : p[0].toUpperCase() + p.slice(1)}
                 {p !== 'all' && (
-                  <span className="ml-1.5 text-xs bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 px-1.5 py-0.5 rounded-full">
+                  <span className="ml-1.5 text-xs bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-primary px-1.5 py-0.5 rounded-full">
                     {budgets.filter((b) => b.period === p).length}
                   </span>
                 )}
@@ -191,8 +191,8 @@ export const Budgets = () => {
         </div>
       ) : filteredBudgets.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 gap-4">
-          <div className="w-16 h-16 rounded-2xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center">
-            <span className="material-icons text-3xl text-indigo-400">
+          <div className="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center">
+            <span className="material-icons text-3xl text-primary">
               savings
             </span>
           </div>
@@ -211,7 +211,7 @@ export const Budgets = () => {
           {periodFilter === 'all' && (
             <button
               onClick={() => setShowAddModal(true)}
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-xl transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-primary hover:bg-primary-hover text-white text-sm font-medium rounded-xl transition-colors"
             >
               <span className="material-icons text-base">add</span>
               Add Your First Budget
@@ -340,17 +340,17 @@ export const Budgets = () => {
                 </div>
 
                 {/* Card actions */}
-                <div className="flex gap-2 pt-2">
+                <div className="flex flex-wrap sm:flex-nowrap gap-2 pt-2">
                   <button
                     onClick={() => handleEditClick(budget)}
-                    className="flex-1 flex items-center justify-center gap-1.5 py-2 border border-border-light dark:border-border-dark rounded-lg text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors"
+                    className="flex-1 flex items-center justify-center gap-1 sm:gap-1.5 py-2 border border-border-light dark:border-border-dark rounded-lg text-xs sm:text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-primary dark:hover:text-primary transition-colors"
                   >
                     <span className="material-icons text-base">edit</span>
                     Edit
                   </button>
                   <button
                     onClick={() => handleViewDetails(budget)}
-                    className="flex-1 flex items-center justify-center gap-1.5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition-colors"
+                    className="flex-1 flex items-center justify-center gap-1 sm:gap-1.5 py-2 bg-primary hover:bg-primary-hover text-white rounded-lg text-xs sm:text-sm font-medium transition-colors"
                   >
                     <span className="material-icons text-base">bar_chart</span>
                     Details

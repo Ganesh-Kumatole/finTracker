@@ -16,6 +16,9 @@ import {
   faExchangeAlt,
   faSun,
   faMoon,
+  faGraduationCap,
+  faCode,
+  faLaptop,
 } from '@fortawesome/free-solid-svg-icons';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 
@@ -38,6 +41,9 @@ const ICON_MAP = {
   light_mode: faSun,
   dark_mode: faMoon,
   lock_reset: faLock,
+  school: faGraduationCap,
+  code: faCode,
+  devices: faLaptop,
 } as const;
 
 // define types

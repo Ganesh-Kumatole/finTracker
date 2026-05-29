@@ -21,12 +21,11 @@ const LoginPage = () => {
   } = useLogin();
 
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
 
   return (
     <div className="min-h-screen flex bg-background-light dark:bg-background-dark">
       {/* ── Left Branding Panel ──────────────────────────────────────── */}
-      <div className="hidden lg:flex flex-col justify-between w-[480px] flex-shrink-0 bg-gradient-to-br from-indigo-600 via-indigo-700 to-purple-800 p-12 relative overflow-hidden">
+      <div className="hidden lg:flex flex-col justify-between w-[480px] flex-shrink-0 bg-primary p-12 relative overflow-hidden">
         {/* Decorative blobs */}
         <div className="absolute -top-20 -left-20 w-72 h-72 rounded-full bg-white/5" />
         <div className="absolute bottom-10 -right-20 w-80 h-80 rounded-full bg-white/5" />
@@ -43,26 +42,29 @@ const LoginPage = () => {
               Fintracker
             </span>
           </div>
-          <h2 className="text-4xl font-extrabold text-white leading-tight mb-4">
-            Take control of your finances.
+          <h2 className="text-4xl font-extrabold text-white leading-tight mb-4 text-left">
+            Personal Finance Tracker.
           </h2>
-          <p className="text-indigo-200 text-lg leading-relaxed">
-            Manage your money smarter with real-time insights and AI-powered
-            recommendations.
+          <p className="text-blue-200 text-lg leading-relaxed text-left mb-6">
+            A full-stack web application built from scratch to demonstrate
+            architectural design, UI/UX implementation, and robust state
+            management.
           </p>
         </div>
 
-        <div className="space-y-4 relative z-10">
+        <div className="space-y-4 relative z-10 mb-6">
           {[
             {
-              icon: 'account_balance_wallet',
-              text: 'Track all transactions in real-time',
+              icon: 'school',
+              text: 'Developed entirely as a capstone learning project.',
             },
-            { icon: 'pie_chart', text: 'Smart budget management & alerts' },
-            { icon: 'insights', text: 'AI-powered financial insights' },
             {
-              icon: 'currency_exchange',
-              text: 'Multi-currency support (INR / USD)',
+              icon: 'code',
+              text: 'Clean architecture with scalable patterns.',
+            },
+            {
+              icon: 'devices',
+              text: 'Fully responsive design for all screen sizes.',
             },
           ].map((f, i) => (
             <div key={i} className="flex items-center gap-3">
@@ -72,13 +74,13 @@ const LoginPage = () => {
                   className="text-white text-base"
                 />
               </div>
-              <p className="text-sm text-indigo-100">{f.text}</p>
+              <p className="text-sm text-blue-100">{f.text}</p>
             </div>
           ))}
         </div>
 
-        <p className="text-xs text-indigo-300 relative z-10">
-          © 2026 Fintracker. All rights reserved.
+        <p className="text-xs text-blue-300 relative z-10 text-left">
+          © {new Date().getFullYear()} FinTracker. Built for learning purposes.
         </p>
       </div>
 
@@ -87,13 +89,13 @@ const LoginPage = () => {
         <div className="w-full max-w-[440px] space-y-6">
           {/* Mobile logo */}
           <div className="flex lg:hidden items-center gap-2 mb-2">
-            <div className="bg-indigo-600 p-1.5 rounded-lg">
+            <div className="bg-primary p-1.5 rounded-lg">
               <Icon
                 name="account_balance_wallet"
                 className="text-white text-lg"
               />
             </div>
-            <span className="text-xl font-bold text-indigo-600 dark:text-indigo-400 tracking-tight">
+            <span className="text-xl font-bold text-primary dark:text-primary-dark tracking-tight">
               Fintracker
             </span>
           </div>
@@ -179,31 +181,10 @@ const LoginPage = () => {
               }
             />
 
-            <div className="flex items-center justify-between">
-              <label className="flex items-center gap-2 cursor-pointer select-none">
-                <input
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  className="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
-                />
-                <span className="text-sm text-text-secondary-light dark:text-text-secondary-dark">
-                  Remember me
-                </span>
-              </label>
-
-              <Link
-                to="/login"
-                className="text-sm font-medium text-indigo-500 hover:text-indigo-600 transition-colors"
-              >
-                Forgot password?
-              </Link>
-            </div>
-
             <button
               type="submit"
               disabled={loading || googleLoading}
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm shadow-sm hover:shadow-md transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-primary hover:bg-primary-hover text-white font-semibold text-sm shadow-premium hover:shadow-premium-hover transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading && <Icon name="refresh" spin className="text-base" />}
               {loading ? 'Logging In…' : 'Log In'}
@@ -214,28 +195,10 @@ const LoginPage = () => {
             Don't have an account?{' '}
             <Link
               to="/signup"
-              className="font-semibold text-indigo-500 hover:text-indigo-600 transition-colors"
+              className="font-semibold text-primary hover:text-primary-hover transition-colors"
             >
               Create free account
             </Link>
-          </p>
-
-          <p className="text-center text-xs text-text-secondary-light dark:text-text-secondary-dark">
-            By signing in, you agree to our{' '}
-            <a
-              href="#"
-              className="underline hover:text-text-primary-light dark:hover:text-text-primary-dark"
-            >
-              Terms
-            </a>
-            {' & '}
-            <a
-              href="#"
-              className="underline hover:text-text-primary-light dark:hover:text-text-primary-dark"
-            >
-              Privacy Policy
-            </a>
-            .
           </p>
         </div>
       </div>

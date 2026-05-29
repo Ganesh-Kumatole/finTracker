@@ -135,7 +135,7 @@ export const EditTransactionModal = ({
                       ? t === 'income'
                         ? 'bg-emerald-500 border-emerald-500 text-white'
                         : 'bg-red-500 border-red-500 text-white'
-                      : 'border-border-light dark:border-border-dark text-text-secondary-light dark:text-text-secondary-dark hover:border-indigo-400'
+                      : 'border-border-light dark:border-border-dark text-text-secondary-light dark:text-text-secondary-dark hover:border-primary'
                   }`}
                 >
                   <span className="material-icons text-base">
@@ -261,7 +261,7 @@ export const EditTransactionModal = ({
           <button
             disabled={submitting}
             type="submit"
-            className="px-5 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm disabled:opacity-50 transition-colors flex items-center gap-2"
+            className="px-5 py-2 text-sm font-semibold text-white bg-primary hover:bg-primary-hover rounded-xl shadow-sm disabled:opacity-50 transition-colors flex items-center gap-2"
           >
             {submitting && (
               <span className="material-icons text-base animate-spin">

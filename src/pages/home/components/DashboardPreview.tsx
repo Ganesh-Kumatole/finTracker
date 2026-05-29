@@ -1,4 +1,4 @@
-import dashboardPreviewImg from '../../../assets/images/dashboard-preview_landingPage.avif';
+import dashboardPreviewImg from '../../../assets/images/dashboard-preview_landingPage.png';
 
 const DashboardPreview = () => {
   return (

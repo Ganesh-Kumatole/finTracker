@@ -33,7 +33,8 @@ export const CardsWrapper = ({
           <Card
             id="stat-balance"
             icon="account_balance_wallet"
-            iconBg="bg-indigo-500"
+            iconBg="bg-blue-50 dark:bg-blue-900/30"
+            iconColor="text-primary"
             label="Net Balance"
             value={formatAmount(income - expense)}
             sub={`Savings rate: ${savingsRate.toFixed(1)}%`}
@@ -42,7 +43,8 @@ export const CardsWrapper = ({
           <Card
             id="stat-income"
             icon="north"
-            iconBg="bg-emerald-500"
+            iconBg="bg-emerald-50 dark:bg-emerald-900/30"
+            iconColor="text-emerald-500"
             label="Monthly Income"
             value={formatAmount(income)}
             sub={momChange}
@@ -51,7 +53,8 @@ export const CardsWrapper = ({
           <Card
             id="stat-expense"
             icon="south"
-            iconBg="bg-red-500"
+            iconBg="bg-red-50 dark:bg-red-900/30"
+            iconColor="text-red-500"
             label="Monthly Expenses"
             value={formatAmount(expense)}
             sub={momChange}
@@ -62,10 +65,17 @@ export const CardsWrapper = ({
             icon="savings"
             iconBg={
               budgetUsedPct > 90
-                ? 'bg-red-500'
+                ? 'bg-red-50 dark:bg-red-900/30'
                 : budgetUsedPct > 70
-                  ? 'bg-amber-500'
-                  : 'bg-indigo-500'
+                  ? 'bg-amber-50 dark:bg-amber-900/30'
+                  : 'bg-blue-50 dark:bg-blue-900/30'
+            }
+            iconColor={
+              budgetUsedPct > 90
+                ? 'text-red-500'
+                : budgetUsedPct > 70
+                  ? 'text-amber-500'
+                  : 'text-primary'
             }
             label="Budget Used"
             value={`${budgetUsedPct}%`}

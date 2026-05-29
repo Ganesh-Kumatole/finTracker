@@ -70,7 +70,7 @@ export const Settings = () => {
         {/* Profile Avatar Management */}
         <div className="flex items-center gap-4 mb-6">
           <div className="relative flex-shrink-0 group">
-            <div className="h-16 w-16 rounded-full overflow-hidden ring-2 ring-indigo-200 dark:ring-indigo-800 shadow-lg">
+            <div className="h-16 w-16 rounded-full overflow-hidden ring-2 ring-primary dark:ring-primary-dark shadow-lg">
               {user?.photoURL ? (
                 <img
                   src={user.photoURL}
@@ -78,7 +78,7 @@ export const Settings = () => {
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <div className="w-full h-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-xl font-bold">
+                <div className="w-full h-full bg-primary flex items-center justify-center text-white text-xl font-bold">
                   {getInitials(user?.displayName)}
                 </div>
               )}
@@ -108,14 +108,14 @@ export const Settings = () => {
               onChange={handleAvatarUpload}
             />
           </div>
-          <div>
-            <p className="font-semibold text-text-primary-light dark:text-text-primary-dark">
+          <div className="min-w-0 flex-1">
+            <p className="font-semibold text-text-primary-light dark:text-text-primary-dark truncate">
               {user?.displayName || 'No name set'}
             </p>
-            <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark">
+            <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark truncate">
               {user?.email}
             </p>
-            <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-0.5">
+            <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-0.5 truncate">
               Signed in via{' '}
               {user?.providerData[0]?.providerId === 'password'
                 ? 'Email / Password'
@@ -178,18 +178,18 @@ export const Settings = () => {
               }}
               className={`flex items-center gap-3 px-4 py-3.5 rounded-xl border-2 transition-all ${
                 theme === t
-                  ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/30'
-                  : 'border-border-light dark:border-border-dark hover:border-indigo-300 dark:hover:border-indigo-700'
+                  ? 'border-primary bg-blue-50 dark:bg-blue-900/30'
+                  : 'border-border-light dark:border-border-dark hover:border-primary dark:hover:border-primary'
               }`}
             >
-              <span className="material-icons text-xl text-indigo-500">
+              <span className="material-icons text-xl text-primary">
                 {t === 'light' ? 'light_mode' : 'dark_mode'}
               </span>
               <span className="text-sm font-medium text-text-primary-light dark:text-text-primary-dark capitalize">
                 {t}
               </span>
               {theme === t && (
-                <span className="material-icons text-indigo-500 text-base ml-auto">
+                <span className="material-icons text-primary text-base ml-auto">
                   check_circle
                 </span>
               )}
@@ -215,8 +215,8 @@ export const Settings = () => {
               }}
               className={`flex items-center gap-3 px-4 py-3.5 rounded-xl border-2 transition-all ${
                 currency === c
-                  ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/30'
-                  : 'border-border-light dark:border-border-dark hover:border-indigo-300 dark:hover:border-indigo-700'
+                  ? 'border-primary bg-blue-50 dark:bg-blue-900/30'
+                  : 'border-border-light dark:border-border-dark hover:border-primary dark:hover:border-primary'
               }`}
             >
               <span className="text-2xl">{c === 'INR' ? '₹' : '$'}</span>
@@ -229,7 +229,7 @@ export const Settings = () => {
                 </p>
               </div>
               {currency === c && (
-                <span className="material-icons text-indigo-500 text-base ml-auto">
+                <span className="material-icons text-primary text-base ml-auto">
                   check_circle
                 </span>
               )}
@@ -368,7 +368,7 @@ export const Settings = () => {
               </PrimaryBtn>
               <button
                 onClick={() => setShowPasswords((s) => !s)}
-                className="flex items-center gap-1.5 text-xs text-text-secondary-light dark:text-text-secondary-dark hover:text-indigo-500 transition-colors"
+                className="flex items-center gap-1.5 text-xs text-text-secondary-light dark:text-text-secondary-dark hover:text-primary transition-colors"
               >
                 <span className="material-icons text-sm">
                   {showPasswords ? 'visibility_off' : 'visibility'}
@@ -401,9 +401,9 @@ export const Settings = () => {
           <button
             id="settings-export-csv"
             onClick={handleExportCSV}
-            className="flex items-center gap-3 px-4 py-4 rounded-xl border border-border-light dark:border-border-dark hover:border-indigo-400 dark:hover:border-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-all group"
+            className="flex items-center gap-3 px-4 py-4 rounded-xl border border-border-light dark:border-border-dark hover:border-primary dark:hover:border-primary hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all group"
           >
-            <span className="material-icons text-2xl text-indigo-500">
+            <span className="material-icons text-2xl text-primary">
               table_chart
             </span>
             <div className="text-left">
@@ -414,16 +414,16 @@ export const Settings = () => {
                 {transactions.length} transactions · spreadsheet-ready
               </p>
             </div>
-            <span className="material-icons text-gray-400 group-hover:text-indigo-500 text-base ml-auto transition-colors">
+            <span className="material-icons text-gray-400 group-hover:text-primary text-base ml-auto transition-colors">
               download
             </span>
           </button>
           <button
             id="settings-export-json"
             onClick={handleExportJSON}
-            className="flex items-center gap-3 px-4 py-4 rounded-xl border border-border-light dark:border-border-dark hover:border-indigo-400 dark:hover:border-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-all group"
+            className="flex items-center gap-3 px-4 py-4 rounded-xl border border-border-light dark:border-border-dark hover:border-primary dark:hover:border-primary hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all group"
           >
-            <span className="material-icons text-2xl text-indigo-500">
+            <span className="material-icons text-2xl text-primary">
               data_object
             </span>
             <div className="text-left">
@@ -434,7 +434,7 @@ export const Settings = () => {
                 Full backup of all app data
               </p>
             </div>
-            <span className="material-icons text-gray-400 group-hover:text-indigo-500 text-base ml-auto transition-colors">
+            <span className="material-icons text-gray-400 group-hover:text-primary text-base ml-auto transition-colors">
               download
             </span>
           </button>
